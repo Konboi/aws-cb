@@ -125,24 +125,12 @@ func (a *AWS) GetBuildLog(ctx context.Context, buildID string) (string, error) {
 }
 
 func (a *AWS) RerunBuild(ctx context.Context, buildID string) (string, error) {
-	det, err := a.cb.BatchGetBuilds(ctx, &cb.BatchGetBuildsInput{Ids: []string{buildID}})
+	resp, err := a.cb.RetryBuild(ctx, &cb.RetryBuildInput{Id: aws.String(buildID)})
 	if err != nil {
 		return "", err
 	}
-	if len(det.Builds) == 0 || det.Builds[0].ProjectName == nil {
-		return "", fmt.Errorf("build not found: %s", buildID)
+	if resp.Build == nil || resp.Build.Id == nil {
+		return "", fmt.Errorf("retry build returned no build for %s", buildID)
 	}
-	b := det.Builds[0]
-	in := &cb.StartBuildInput{ProjectName: b.ProjectName}
-	if b.SourceVersion != nil {
-		in.SourceVersion = b.SourceVersion
-	}
-	if b.Environment != nil && len(b.Environment.EnvironmentVariables) > 0 {
-		in.EnvironmentVariablesOverride = b.Environment.EnvironmentVariables
-	}
-	started, err := a.cb.StartBuild(ctx, in)
-	if err != nil {
-		return "", err
-	}
-	return aws.ToString(started.Build.Id), nil
+	return aws.ToString(resp.Build.Id), nil
 }
