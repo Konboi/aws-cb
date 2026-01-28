@@ -8,7 +8,7 @@ import (
 
 	"github.com/alecthomas/kong"
 
-	"github.com/Konboi/cb/internal/service"
+	"github.com/Konboi/aws-cb/internal/service"
 )
 
 type CLI struct {
