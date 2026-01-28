@@ -1,4 +1,4 @@
-module github.com/Konboi/cb
+module github.com/Konboi/aws-cb
 
 go 1.23
 

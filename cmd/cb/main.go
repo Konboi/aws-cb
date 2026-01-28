@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Konboi/cb/internal/cli"
-	"github.com/Konboi/cb/internal/service"
+	"github.com/Konboi/aws-cb/internal/cli"
+	"github.com/Konboi/aws-cb/internal/service"
 )
 
 func main() {
