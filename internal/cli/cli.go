@@ -27,7 +27,7 @@ func (c *CLI) Run(ctx context.Context, args []string) int {
     case "help", "--help", "-h":
         c.printHelp()
         return 0
-    case "list":
+    case "list", "ls":
         return c.cmdList(ctx, args[1:])
     case "less":
         return c.cmdLess(ctx, args[1:])
@@ -45,7 +45,9 @@ func (c *CLI) printHelp() {
 
 Usage:
   cb list                    # list CodeBuild projects
+  cb ls                      # alias for list
   cb list <PROJECT>          # list recent builds for a project
+  cb ls <PROJECT>            # alias for list
   cb less <BUILD_ID>         # display build log (stub)
   cb rerun <BUILD_ID>        # rerun build (stub)
 
@@ -129,4 +131,3 @@ func (c *CLI) cmdRerun(ctx context.Context, args []string) int {
     fmt.Fprintf(c.Out, "triggered build: %s\n", newID)
     return 0
 }
-

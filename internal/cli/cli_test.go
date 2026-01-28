@@ -34,6 +34,20 @@ func TestListProjects(t *testing.T) {
     }
 }
 
+func TestListProjectsAliasLS(t *testing.T) {
+    svc := &fakeService{projects: []string{"a", "b"}}
+    var out, err bytes.Buffer
+    c := &CLI{Service: svc, Out: &out, Err: &err}
+    code := c.Run(context.Background(), []string{"ls"})
+    if code != 0 {
+        t.Fatalf("exit code = %d, want 0; err=%s", code, err.String())
+    }
+    got := out.String()
+    if got != "a\nb\n" {
+        t.Fatalf("unexpected output: %q", got)
+    }
+}
+
 func TestListProjectBuilds(t *testing.T) {
     svc := &fakeService{builds: []string{"id1 SUCCESS", "id2 FAILED"}}
     var out, err bytes.Buffer
@@ -80,4 +94,3 @@ func TestLessAndRerun(t *testing.T) {
         t.Fatalf("rerun output = %q", out.String())
     }
 }
-
