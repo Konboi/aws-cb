@@ -5,6 +5,7 @@ go 1.23
 toolchain go1.24.2
 
 require (
+	github.com/alecthomas/kong v1.13.0
 	github.com/aws/aws-sdk-go-v2 v1.40.0
 	github.com/aws/aws-sdk-go-v2/config v1.32.1
 	github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs v1.61.0
